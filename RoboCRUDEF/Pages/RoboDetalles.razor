@@ -1,0 +1,147 @@
+﻿@page "/RoboDetalles"
+@page "/RoboDetalles/{id:int}"
+@inject IRoboService RoboService
+@inject NavigationManager NavigationManager
+
+
+
+
+
+<RadzenTemplateForm Data="@robo">
+
+    <div class="row">
+        <div class="col-10">
+            <Radzen.Blazor.RadzenFieldset Text="Registro">
+
+                <div class="row">
+                    <div class=" col-md-2 align-items-center d-flex">
+                        <Radzen.Blazor.RadzenLabel Text="Cedula" />
+                    </div>
+                    <div class=" col-md-6">
+                        <Radzen.Blazor.RadzenTextBox Name="Cedula" Style="width:75%" @bind-Value="robo.Cedula" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class=" col-md-2 align-items-center d-flex">
+                        <Radzen.Blazor.RadzenLabel Text="Nombre" />
+                    </div>
+                    <div class=" col-md-6">
+                        <Radzen.Blazor.RadzenTextBox Name="Nombre" Style="width:100%" @bind-Value="robo.Nombre" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class=" col-md-2 align-items-center d-flex">
+                        <Radzen.Blazor.RadzenLabel Text="Fecha" />
+                    </div>
+                    <div class=" col-md-6">
+                        <Radzen.Blazor.RadzenDatePicker Name="Fecha" Style="width:75%" @bind-Value="robo.Fecha" DateFormat="d" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class=" col-md-2 align-items-center d-flex">
+                        <Radzen.Blazor.RadzenLabel Text="Objeto Robado" />
+                    </div>
+                    <div class=" col-md-6">
+                        <Radzen.Blazor.RadzenTextBox Name="ObjetoR" Style="width:100%" @bind-Value="robo.Objeto_Robado" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class=" col-md-2 align-items-center d-flex">
+                        <Radzen.Blazor.RadzenLabel Text="Valor" />
+                    </div>
+                    <div class=" col-md-6">
+                        <Radzen.Blazor.RadzenTextBox Name="Valor" Style="width:50%" @bind-Value="robo.Valor" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class=" col-md-2 align-items-center d-flex">
+                        <Radzen.Blazor.RadzenLabel Text="Ubicacion" />
+                    </div>
+                    <div class=" col-md-6">
+                        <Radzen.Blazor.RadzenTextBox Name="Ubicacion" Style="width:100%" @bind-Value="robo.Ubicacion" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-md-2 align-items-center d-flex">
+                        <Radzen.Blazor.RadzenLabel Text="Latitud" />
+                    </div>
+                    <div class=" col-md-6">
+                        <InputNumber  @bind-Value=@robo.Latitud></InputNumber>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-md-2 align-items-center d-flex">
+                        <RadzenLabel Text="Longitud" />
+                    </div>
+                    <div class=" col-md-6">
+                        <InputNumber @bind-Value=@robo.Longitud></InputNumber>
+                        
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class=" col-md-2 align-items-center d-flex" />
+
+                    <div class=" col-md-6">
+                        <RadzenButton Text="Guardar" ButtonStyle="ButtonStyle.Secondary" Click=@(args => Guardar()) />
+                        <RadzenButton Text="Cancelar" ButtonStyle="ButtonStyle.Primary" Click=@(args => Cancelar()) />
+                    </div>
+                </div>
+
+            </Radzen.Blazor.RadzenFieldset>
+
+        </div>
+       
+    </div>
+
+</RadzenTemplateForm>
+
+
+
+
+
+
+
+
+
+
+@code {
+    [Parameter]
+
+    public int Id { get; set; }
+
+    private Robo robo = new Robo();
+
+   
+
+
+
+    protected override  async Task OnInitializedAsync()
+    {
+        if(Id != 0)
+        {
+            robo = await RoboService.GetRoboDetails(Id);
+        }
+    }
+
+
+    protected async Task Guardar()
+    {
+        await RoboService.SaveRobo(robo);
+        NavigationManager.NavigateTo("/Consulta");
+    }
+
+
+    private void Cancelar()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

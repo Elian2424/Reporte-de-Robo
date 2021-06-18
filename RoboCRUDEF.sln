@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoboCRUDEF", "RoboCRUDEF\RoboCRUDEF.csproj", "{17C609EE-CB16-4875-8DF3-A8E0D66C9D52}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17C609EE-CB16-4875-8DF3-A8E0D66C9D52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17C609EE-CB16-4875-8DF3-A8E0D66C9D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17C609EE-CB16-4875-8DF3-A8E0D66C9D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17C609EE-CB16-4875-8DF3-A8E0D66C9D52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC8A8E6E-6F3B-4132-9AA6-E16AB2BA3390}
+	EndGlobalSection
+EndGlobal

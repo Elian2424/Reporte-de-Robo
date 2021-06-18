@@ -1,0 +1,127 @@
+﻿
+@page "/Exportar/{id:int}"
+@using System.IO
+@inject IRoboService RoboService
+@inject NavigationManager NavigationManager
+
+
+<h3>Exportar</h3>
+<div style="width:800px">
+    <table class="table ">
+        <thead>
+
+            <tr>
+                <th>Cedula</th>
+                <th>Nombre</th>
+                <th>Fecha</th>
+                <th>Objeto Robado</th>
+                <th>Valor</th>
+                <th>Ubicacion</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <th></th>
+
+            </tr>
+
+
+
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>@robo.Cedula</td>
+                <td>@robo.Nombre</td>
+                <td>@robo.Fecha</td>
+                <td>@robo.Objeto_Robado</td>
+                <td>@robo.Valor</td>
+                <td>@robo.Ubicacion</td>
+                <td>@robo.Latitud</td>
+                <td>@robo.Longitud</td>
+            </tr>
+            <button type="button" @onclick="ExportarCaso">EXPORTAR</button>
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter]
+
+    public int Id { get; set; }
+
+    private Robo robo = new Robo();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != 0)
+        {
+            robo = await RoboService.GetRoboDetails(Id);
+        }
+    }
+
+    public void ExportarCaso()
+    {
+
+
+
+        using (var db = new MyRContext())
+        {
+            string ruta = "C:\\2021\\Gestion de Robo";
+
+            if (Directory.Exists(ruta) == false)
+            {
+                Directory.CreateDirectory(ruta);
+
+            }
+
+            string tabla1 = "<html> <head><title>Informacion del caso</title> <h1> Caso "+ robo.Nombre+ "</h1><boddy></head><table class='table table-bordered' border='1' align='center'>" +
+                    "<thead>" +
+                    "<tr>" +
+                    "<th>ID del Robo</th>" +
+                    "<th>"+robo.RoboId+"</th>" +
+                    "</tr>" +
+                    "</thead>" +
+                    "<tbody class='tbody'>" +
+                    "<tr>" +
+                    "<td>Cedula</td>" +
+                    "<td>"+robo.Cedula+"</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>Nombre</td>" +
+                    "<td>"+robo.Nombre+"</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>Fecha</td>" +
+                    "<td>"+robo.Fecha+"</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>Objeto Robado</td>" +
+                    "<td>"+robo.Objeto_Robado+"</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>Valor</td>" +
+                    "<td>"+robo.Valor+"</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>Ubicacion</td>" +
+                    "<td>"+robo.Ubicacion+"</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>Latitud</td>" +
+                    "<td>"+robo.Latitud+"</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>Longitud</td>" +
+                    "<td>"+robo.Longitud+"</td>" +
+                    "</tr>" +
+                    "</tbody>" +
+                    "</table></boddy></html>";
+
+            File.WriteAllText("C:\\2021\\Gestion de Robo\\" + robo.Nombre + ".html", tabla1);
+
+
+        }
+    }
+
+
+}

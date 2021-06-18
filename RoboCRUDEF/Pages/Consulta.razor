@@ -1,0 +1,89 @@
+﻿@page "/Consulta"
+@inject IRoboService RoboService
+@inject NavigationManager NavigationManager
+
+<h3>Consulta</h3>
+
+<p>Esta pagina muestra una lista de todos los robos registrados</p>
+@Message
+
+<div>
+    <a href="/RoboDetalles">Registrar Nuevo Robo</a>
+</div>
+
+@if (robos == null)
+{
+
+    <p><em>Cargando...</em></p>
+
+}
+else
+{
+    <div style="width:800px">
+        <table class="table ">
+            <thead>
+
+                <tr>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th>Objeto Robado</th>
+                    <th>Valor</th>
+                    <th>Ubicacion</th>
+                    <th>Latitud</th>
+                    <th>Longitud</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+
+
+            </thead>
+            <tbody>
+                @foreach (var robo in robos)
+                {
+                    <tr>
+                        <td>@robo.Cedula</td>
+                        <td>@robo.Nombre</td>
+                        <td>@robo.Fecha</td>
+                        <td>@robo.Objeto_Robado</td>
+                        <td>@robo.Valor</td>
+                        <td>@robo.Ubicacion</td>
+                        <td>@robo.Latitud</td>
+                        <td>@robo.Longitud</td>
+                        <td><a href="/RoboDetalles/@robo.RoboId"><i>Editar</i></a></td>
+                        <td><a href="/Exportar/@robo.RoboId"><i>Exportar</i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+
+
+
+
+@code {
+    public IEnumerable<Robo> robos { get; set; }
+    public string Message { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            robos = await RoboService.GetAllRobos();
+
+        }
+        catch (Exception e)
+        {
+
+            Message = e.Message;
+        }
+
+    }
+
+
+   
+}
